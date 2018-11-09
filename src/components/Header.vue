@@ -15,7 +15,7 @@
                     </li>
                     <li v-else class="nav-item">
                         <div class="btn-group" role="group">
-                            <router-link class="nav-link btn btn-secondary" active-class="active" to="/Profile">Your profile</router-link>
+                            <router-link class="nav-link btn btn-secondary" active-class="active"  :to="{ path: 'Profile', query: { from:  getSteamId32 }}" >Your profile</router-link>
                             <router-link class="nav-link btn btn-secondary" active-class="active" to="#">Favorites</router-link>
                             <button class="nav-link btn btn-secondary" v-on:click="logOff">Log off</button>
                         </div>
@@ -27,9 +27,9 @@
                         <a class="nav-link" href="#">About</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                <form class="form-inline my-2 my-lg-0" @submit.prevent="sendSearch">
+                    <input v-model="searchQuery" class="form-control mr-sm-2" type="text" placeholder="Search profiles">
+                    <button class="btn btn-secondary my-2 my-sm-0">Search</button>
                 </form>
             </div>
         </div>
@@ -42,28 +42,55 @@
         name: "Header",
         data() {
             return {
-                isLogged: this.checkIfIsLogged()
+                isLogged: this.checkIfIsLogged(),
+                mySteamId32: null,
+                searchQuery: ''
             }
         },
         created() {
             EventBus.$on('logged', () => {
                 this.isLogged = this.checkIfIsLogged()
             })
+
+            EventBus.$on('changeSteamId32', function(newSteamId32) {
+                this.mySteamId32 = newSteamId32;
+            })
         },
         methods: {
             checkIfIsLogged () {
                 let token = localStorage.getItem('user');
                 if (token) {
-                    return true
+                    // var tempToken = JSON.parse(token);
+                    // this.mySteamId32 = tempToken.steamId32;
+                    return true;
                 } else {
-                    return false
+                    return false;
                 }
             },
             logOff () {
                 localStorage.removeItem('user');
                 this.isLogged = this.checkIfIsLogged();
                 this.$router.push('/')
+            },
+            sendSearch() {
+                this.$router.push('Search?q=' + this.searchQuery);
+            },
+
+        },
+        computed: {
+            getSteamId32() {
+                if(this.mySteamId32 === null) {
+                    const test = localStorage.getItem("user");
+                    const testStringified = JSON.parse(test);
+                    this.mySteamId32 = testStringified.steamId32;
+                }
+                console.log('Class: computed, Function: getSteamId32, Line: 87');
+
+                return this.mySteamId32.toString();
             }
+        },
+        async mounted() {
+            // this.computed;
         }
     }
 </script>

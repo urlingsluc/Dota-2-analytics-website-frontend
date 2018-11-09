@@ -9,9 +9,15 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "datatables.net": "^1.10.19",
+    "datatables.net-bs4": "^1.10.19",
+    "jquery": "^3.3.1",
+    "moment": "^2.22.2",
     "register-service-worker": "^1.0.0",
+    "steam-id-convertor": "^1.0.1",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
+    "vue-tables": "^1.6.44",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

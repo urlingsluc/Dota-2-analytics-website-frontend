@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import webAuth from './views/webAuth.vue'
 import Profile from './views/Profile.vue'
+import Search from './views/Search.vue'
 import axios from 'axios'
 
 Vue.use(Router);
@@ -20,9 +21,20 @@ export default new Router({
             component: webAuth
         },
         {
+            path: '/Search',
+            name: 'Search',
+            component: Search,
+            props: (route) => ({
+                q: route.query.q
+            })
+        },
+        {
             path: '/Profile',
             name: 'Profile',
             component: Profile,
+            props: (route) => ({
+              from: route.query.from
+            }),
             beforeEnter: requireAuth
         },
         {
@@ -35,6 +47,12 @@ export default new Router({
         }
     ]
 })
+
+import { EventBus } from "./event-bus";
+//Refresh load bar
+function logOff () {
+    EventBus.$emit('logged', 'User logged');
+}
 
 function requireAuth(to, from, next) {
     var data;
@@ -58,6 +76,7 @@ function requireAuth(to, from, next) {
             .catch(error => {
                 console.log(error);
                 localStorage.removeItem('user');
+                this.logOff();
                 next({
                     path: '/webAuth',
                     query: {redirect: to.fullPath}
@@ -66,6 +85,7 @@ function requireAuth(to, from, next) {
     }
     else {
         localStorage.removeItem('user');
+        this.logOff();
         next({
             path: '/webAuth',
             query: {redirect: to.fullPath}
