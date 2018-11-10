@@ -60,6 +60,7 @@
                     <tr>
                         <th scope="col">Match id</th>
                         <th scope="col">Hero</th>
+                        <th scope="col">duration</th>
                         <th scope="col">Outcome</th>
                         <th scope="col">Radiant or Dire</th>
                         <th scope="col">K/D/A</th>
@@ -70,6 +71,7 @@
                         <td>{{ match.match_id }}</td>
                         <!--<td><img :src="getPicture(match.hero_id)"></td>-->
                         <td v-for="hero in heroesData" :key="hero.id" v-if="hero.id === match.hero_id"><img :alt="hero.heroName" :src="hero.file"><span hidden>{{ hero.heroName }}</span></td>
+                        <td>{{ match.durationFormated }}</td>
                         <td>{{ match.playerWon ? 'Won' : 'Lost' }}</td>
                         <td>{{match.isRadiant ? 'Radiant' : 'Dire'}}</td>
                         <td>{{ match.kills }}/{{ match.deaths }}/{{ match.assists }}</td>
@@ -91,6 +93,7 @@
     import axios from 'axios';
     import moment from 'moment';
     import { heroesData } from '../variables.js'
+    import parseSeconds from 'parse-seconds'
 
     import JQuery from 'jquery'
     import dt from 'datatables.net';
@@ -166,7 +169,7 @@
             async getMatches() {
                 await axios.get('https://api.opendota.com/api/heroes')
                     .then(response => {
-                
+
                     });
                 console.log(heroesData);
                 await axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/matches')
@@ -175,6 +178,16 @@
 
                         for(let i = 0; i < this.matches.length; i++) {
                             var result;
+                            var parsedTime = parseSeconds({ hours: false })(this.matches[i].duration);
+                            if(parsedTime.seconds.toString().length === 1)
+                            {
+                                parsedTime.seconds = '0' + parsedTime.seconds
+                            }
+                            if(parsedTime.minutes.toString().length === 1)
+                            {
+                                parsedTime.minutes = '0' + parsedTime.minutes
+                            }
+                            this.matches[i]["durationFormated"] = parsedTime.minutes + ':' + parsedTime.seconds;
                             if(this.matches[i].player_slot < 128) {
                                 this.matches[i]["isRadiant"] = true;
                                 if (this.matches[i].radiant_win) {
@@ -204,14 +217,14 @@
                 var hero = {
                     file: "/img/Heroes/abaddon_sb.png"
                 };
-                 heroesData.forEach(function(entry) {
+                heroesData.forEach(function(entry) {
                     if(heroId === entry.id) {
                         hero = entry;
                     }
                 });
                 return hero.file
             },
-            
+
 
             async applyDataTablesFunction() {
                 $(document).ready(function() {

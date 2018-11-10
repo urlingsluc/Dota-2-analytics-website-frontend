@@ -1,8 +1,8 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4"  v-for="profile in profiles" :key="profile.account_id">
-                <div class="thumbnail">
+            <div class="col-xs-12 col-sm-6 col-md-4" style="padding-bottom: 30px;" v-for="profile in profiles" :key="profile.account_id">
+                <div class="img-thumbnail">
                     <img v-bind:src="profile.avatarfull" style="border-radius:2%;" alt="avatar">
                     <div class="caption">
                         <h3>{{ profile.personaname }}</h3>
