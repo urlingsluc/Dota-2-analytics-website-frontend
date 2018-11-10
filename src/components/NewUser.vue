@@ -9,18 +9,18 @@
                     <label style="text-align: left; display: block; padding-left: 20px;" for="inputSteamName">Steam In-game name:</label>
                     <input v-model="query" type="text" class="form-control" id="inputSteamName" placeholder="Steam Name">
                 </div>
-                <button class="btn btn-primary" >Link!</button>
+                <button class="btn btn-primary" >Search!</button>
             </form>
         </div>
 
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4"  v-for="profile in profiles" :key="profile.account_id">
-                <div class="thumbnail">
-                    <img v-bind:src="profile.avatarfull" style="border-radius:2%;" alt="avatar">
+            <div class="col-xs-12 col-sm-6 col-md-2" style="margin-bottom: 25px;" v-for="profile in profiles" :key="profile.account_id">
+                <div class="img-thumbnail">
+                    <img v-bind:src="profile.avatarfull" style="border-radius:2%; width: 100%;" alt="avatar">
                     <div class="caption">
-                        <h3>{{ profile.personaname }}</h3>
+                        <h5>{{ profile.personaname }}</h5>
                         <!--<p><router-link class="btn btn-primary" :to="{ path: 'Profile', query: { from:  profile.account_id.toString() }}" > Go to Profile</router-link> </p>-->
-                        <button class="btn btn-primary"  v-on:click="Link(profile.account_id)">Link!</button>
+                        <button class="btn btn-primary"  v-on:click="Link(profile.account_id)">Link!</button> <router-link class="btn btn-secondary" :to="{ path: 'Profile', query: { from:  profile.account_id.toString() }}">Show profile</router-link><img id="steamImg"  src="/img/icons/steam-logo.png" style=" margin-left: 15px;border-radius:2%; width: 20%;" alt="avatar">
                     </div>
                 </div>
             </div>
@@ -113,5 +113,16 @@
 </script>
 
 <style scoped>
-
+    #steamImg {
+        opacity: 0.55;
+        -webkit-transition: opacity 0.5s;
+        -moz-transition: opacity 0.5s;
+        -ms-transition: opacity 0.5s;
+        -o-transition: opacity 0.5s;
+        transition: opacity 0.5s;
+    }
+    #steamImg:hover {
+        
+        opacity: 1.0;
+    }
 </style>

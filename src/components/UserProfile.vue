@@ -41,8 +41,8 @@
                             </thead>
                             <tbody>
                             <tr v-for="peer in profilePeers" v-bind:key="peer.account_id">
-                                <th scope="row"><img style="border-radius:2%;" v-bind:src="peer.avatar"/></th>
-                                <td><router-link :to="{ path: 'Profile', query: { from:  peer.account_id.toString() }}" >{{ peer.personaname }}</router-link></td>
+                                <th scope="row"><img style="border-radius:2%;"  v-bind:src="peer.avatar"/></th>
+                                <td><router-link style="display: block;width: 125px;overflow: hidden;white-space: nowrap;-ms-text-overflow: ellipsis;text-overflow: ellipsis;" :to="{ path: 'Profile', query: { from:  peer.account_id.toString() }}" >{{ peer.personaname }}</router-link></td>
                                 <!--TODO CONTINUE HERE-->
                                 <td>{{ peer.with_games }}</td>
                                 <td>{{ (peer.with_win / peer.with_games * 100).toFixed(2) }}%</td>
@@ -59,6 +59,7 @@
                     <thead>
                     <tr>
                         <th scope="col">Match id</th>
+                        <th scope="col">Hero</th>
                         <th scope="col">Outcome</th>
                         <th scope="col">Radiant or Dire</th>
                         <th scope="col">K/D/A</th>
@@ -67,6 +68,8 @@
                     <tbody  >
                     <tr v-for="match in matches" :key="match.match_id" :class="[match.playerWon ? 'table-success' : 'table-danger']">
                         <td>{{ match.match_id }}</td>
+                        <!--<td><img :src="getPicture(match.hero_id)"></td>-->
+                        <td v-for="hero in heroesData" :key="hero.id" v-if="hero.id === match.hero_id"><img :alt="hero.heroName" :src="hero.file"><span hidden>{{ hero.heroName }}</span></td>
                         <td>{{ match.playerWon ? 'Won' : 'Lost' }}</td>
                         <td>{{match.isRadiant ? 'Radiant' : 'Dire'}}</td>
                         <td>{{ match.kills }}/{{ match.deaths }}/{{ match.assists }}</td>
@@ -81,17 +84,13 @@
             </div>
         </div>
 
-
-
-
-
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     import moment from 'moment';
-
+    import { heroesData } from '../variables.js'
 
     import JQuery from 'jquery'
     import dt from 'datatables.net';
@@ -129,7 +128,8 @@
                 //hero
 
                 //matchData
-                matches: []
+                matches: [],
+                heroesData:heroesData
             }
         },
         async mounted() {
@@ -166,8 +166,9 @@
             async getMatches() {
                 await axios.get('https://api.opendota.com/api/heroes')
                     .then(response => {
-
+                
                     });
+                console.log(heroesData);
                 await axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/matches')
                     .then(response => {
                         this.matches = response.data;
@@ -199,6 +200,19 @@
                 await this.applyDataTablesFunction();
 
             },
+            getPicture(heroId) {
+                var hero = {
+                    file: "/img/Heroes/abaddon_sb.png"
+                };
+                 heroesData.forEach(function(entry) {
+                    if(heroId === entry.id) {
+                        hero = entry;
+                    }
+                });
+                return hero.file
+            },
+            
+
             async applyDataTablesFunction() {
                 $(document).ready(function() {
                     $('#matchTable').DataTable({

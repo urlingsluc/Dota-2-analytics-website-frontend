@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header :key="Date.now()"/>
-        <router-view :key="Date.now()"/>
+        <router-view :key="Date.now() + 1000"/>
     </div>
 </template>
 

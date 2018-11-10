@@ -56,7 +56,7 @@ function logOff () {
 
 function requireAuth(to, from, next) {
     var data;
-    console.log('REQUIRE AUTHENTICATION')
+    console.log('REQUIRE AUTHENTICATION');
     data = JSON.parse(localStorage.getItem('user'));
     console.log('bbbbb');
     var dataStringified = JSON.stringify(data);
@@ -76,7 +76,7 @@ function requireAuth(to, from, next) {
             .catch(error => {
                 console.log(error);
                 localStorage.removeItem('user');
-                this.logOff();
+                // this.logOff();
                 next({
                     path: '/webAuth',
                     query: {redirect: to.fullPath}
@@ -85,7 +85,7 @@ function requireAuth(to, from, next) {
     }
     else {
         localStorage.removeItem('user');
-        this.logOff();
+        // this.logOff();
         next({
             path: '/webAuth',
             query: {redirect: to.fullPath}
