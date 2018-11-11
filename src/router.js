@@ -29,13 +29,22 @@ export default new Router({
             })
         },
         {
+            path: '/myprofile',
+            name: 'Profile',
+            component: Profile,
+            props: (route) => ({
+                from: route.query.from
+            }),
+            beforeEnter: requireAuth
+        },
+        {
             path: '/Profile',
             name: 'Profile',
             component: Profile,
             props: (route) => ({
               from: route.query.from
             }),
-            beforeEnter: requireAuth
+            // beforeEnter: requireAuth
         },
         {
             path: '/about',

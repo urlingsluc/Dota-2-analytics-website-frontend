@@ -15,7 +15,7 @@
                     </li>
                     <li v-else class="nav-item">
                         <div class="btn-group" role="group">
-                            <router-link class="nav-link btn btn-secondary" active-class="active"  :to="{ path: 'Profile', query: { from:  getSteamId32 }}" >Your profile</router-link>
+                            <router-link class="nav-link btn btn-secondary" active-class="active"  :to="{ path: 'myprofile', query: { from:  getSteamId32 }}" >Your profile</router-link>
                             <router-link class="nav-link btn btn-secondary" active-class="active" to="#">Favorites</router-link>
                             <button class="nav-link btn btn-secondary" v-on:click="logOff">Log off</button>
                         </div>

@@ -66,7 +66,7 @@
                     localStorage.setItem('user', JSON.stringify(userParsed));
                     EventBus.$emit('changeSteamId32', steamId32);
                     location.reload(true);
-                    this.$router.push('Profile?from=' + steamId32);
+                    this.$router.push('myprofile?from=' + steamId32);
 
                 }).catch(err => {
                     console.log(err);
