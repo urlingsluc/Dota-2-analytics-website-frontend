@@ -70,10 +70,10 @@
                     <tr v-for="match in matches" :key="match.match_id" :class="[match.playerWon ? 'table-success' : 'table-danger']">
                         <td>{{ match.match_id }}</td>
                         <!--<td><img :src="getPicture(match.hero_id)"></td>-->
-                        <td v-for="hero in heroesData" :key="hero.id" v-if="hero.id === match.hero_id"><img :alt="hero.heroName" :src="hero.file"><span hidden>{{ hero.heroName }}</span></td>
+                        <td><div v-for="hero in heroesData" :key="hero.id" v-if="hero.id === match.hero_id"><img :alt="hero.heroName" :src="hero.file"><span hidden>{{ hero.heroName }}</span></div></td>
                         <td>{{ match.durationFormated }}</td>
                         <td>{{ match.playerWon ? 'Won' : 'Lost' }}</td>
-                        <td>{{match.isRadiant ? 'Radiant' : 'Dire'}}</td>
+                        <td>{{ match.isRadiant ? 'Radiant' : 'Dire'}}</td>
                         <td>{{ match.kills }}/{{ match.deaths }}/{{ match.assists }}</td>
                     </tr>
                     </tbody>
@@ -208,30 +208,34 @@
                             }
                             this.matches[i]["playerWon"] = result;
                         }
+                        this.applyDataTablesFunction();
                         console.log(this.matches);
                     });
-                await this.applyDataTablesFunction();
+
 
             },
-            getPicture(heroId) {
-                var hero = {
-                    file: "/img/Heroes/abaddon_sb.png"
-                };
-                heroesData.forEach(function(entry) {
-                    if(heroId === entry.id) {
-                        hero = entry;
-                    }
-                });
-                return hero.file
-            },
+            // getPicture(heroId) {
+            //     var hero = {
+            //         file: "-"
+            //     };
+            //     heroesData.forEach(function(entry) {
+            //         if(heroId === entry.id) {
+            //             hero = entry;
+            //         }
+            //     });
+            //     return hero.file
+            // },
 
 
-            async applyDataTablesFunction() {
+            applyDataTablesFunction() {
                 $(document).ready(function() {
                     $('#matchTable').DataTable({
                         "order": [[ 0, "desc" ]]
                     });
                 } );
+
+                // setTimeout(function() { $('#matchTable').DataTable(); }, 10000);
+
             }
         }
     }
