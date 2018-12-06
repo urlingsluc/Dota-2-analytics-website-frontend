@@ -58,7 +58,7 @@ export default new Router({
 })
 
 import { EventBus } from "./event-bus";
-import { connection } from "../variables";
+import { connection } from "./variables";
 //Refresh load bar
 function logOff () {
     EventBus.$emit('logged', 'User logged');
