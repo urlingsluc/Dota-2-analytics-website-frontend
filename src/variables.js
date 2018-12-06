@@ -1,5 +1,5 @@
-export const connection = 'http://localhost:12001/api/';
-// export const connection = 'http://217.105.43.173:12001/api/';
+// export const connection = 'http://localhost:12001/api/';
+export const connection = 'http://217.105.43.173:12001/api/';
 export const heroesData = [
     {
         id:1,
