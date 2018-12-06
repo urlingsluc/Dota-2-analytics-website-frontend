@@ -58,6 +58,7 @@ export default new Router({
 })
 
 import { EventBus } from "./event-bus";
+import { connection } from "../variables";
 //Refresh load bar
 function logOff () {
     EventBus.$emit('logged', 'User logged');
@@ -74,7 +75,7 @@ function requireAuth(to, from, next) {
     if (dataStringified != 'null') {
         console.log('not null!!');
 
-        axios.post('http://localhost:9999/auth/token', {
+        axios.post(connection + 'auth/token', {
             id: data.id,
             token: data.token
         })

@@ -93,6 +93,7 @@
     import axios from 'axios';
     import moment from 'moment';
     import { heroesData } from '../variables.js'
+    import { connection } from "../variables";
     import parseSeconds from 'parse-seconds'
 
     import JQuery from 'jquery'

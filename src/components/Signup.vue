@@ -43,6 +43,7 @@
 
 <script>
     import axios from 'axios'
+    import { connection } from "../variables";
     export default {
         name: "Signup",
         data() {
@@ -66,7 +67,7 @@
                     return;
                 }
                 
-                await axios.post('http://localhost:9999/auth/insert',{
+                await axios.post(connection + 'auth/insert',{
                     name: this.name,
                     email: this.email,
                     username: this.username,

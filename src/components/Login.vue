@@ -16,13 +16,14 @@
             <button class="btn btn-primary" >Login</button>
         </form>
     </div>
-
 </template>
 
 <script>
     import axios from 'axios';
     import { EventBus } from "../event-bus";
     import convertor from 'steam-id-convertor';
+    import { connection } from "../variables";
+    // import { createCookie, readCookie, eraseCookie } from '../cookie.js'
 
     export default {
         name: "LoginOrSignup",
@@ -36,7 +37,7 @@
         methods: {
             sendLogin: async function() {
                 this.error = false;
-                await axios.post('http://localhost:9999/auth/login',{
+                await axios.post(connection + 'auth/login',{
                     username: this.username,
                     password: this.password
                 }).then(response => {
@@ -44,12 +45,11 @@
                     console.log('data:');
                     console.log(response.data);
 
-
                     response.data["steamId64"] = convertor.to64(response.data.steamId32);
 
-
-
                     localStorage.setItem('user', JSON.stringify(response.data));
+                    // createCookie('user',JSON.stringify(response.data,30));
+                    // console.log(readCookie('user'));
                     EventBus.$emit('logged', 'User logged');
                     // location.reload(true);
                     this.$router.push('about')

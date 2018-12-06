@@ -32,6 +32,7 @@
 <script>
     import axios from 'axios';
     import { EventBus } from '../event-bus.js'
+    import { connection } from "../variables";
     export default {
         name: "NewUser",
         data() {
@@ -55,7 +56,7 @@
                 var user = localStorage.getItem('user');
                 var userParsed = JSON.parse(user);
                 var id = userParsed.id;
-                await axios.post('http://localhost:9999/user/setsteamid',{
+                await axios.post(connection + 'user/setsteamid',{
                     id:id,
                     steamId32: steamId32
                 }).then(response => {
