@@ -33,7 +33,7 @@ pipeline {
       steps {
         sh 'docker build -t dota2analyticsapp-frontend .'
         sh 'docker rm -f dota2analyticsapp-frontend-con || true'
-        sh 'docker run -d -p 8888:8888 --restart always --name dota2analyticsapp-frontend-con dota2analyticsappp-frontend'
+        sh 'docker run -d -p 12000:12000 --restart always --name dota2analyticsapp-frontend-con dota2analyticsappp-frontend'
         sh 'docker image prune -f'
       }
     }
