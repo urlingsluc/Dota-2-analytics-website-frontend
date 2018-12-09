@@ -12,7 +12,6 @@
             </li>
         </ul>
 
-
         <div id="myTabContent" class="tab-content" style="margin-top: 25px;">
             <!--.Profile-->
             <div class="tab-pane fade active show" id="Profile" >
@@ -67,7 +66,7 @@
                     </tr>
                     </thead>
                     <tbody  >
-                    <tr v-for="match in matches" :key="match.match_id" :class="[match.playerWon ? 'table-success' : 'table-danger']">
+                    <router-link style="cursor: pointer" v-for="match in matches" :key="match.match_id" :class="[match.playerWon ? 'table-success' : 'table-danger']" tag="tr" :to="{ path: 'match', query: { id:  match.match_id.toString() }}">
                         <td>{{ match.match_id }}</td>
                         <!--<td><img :src="getPicture(match.hero_id)"></td>-->
                         <td><div v-for="hero in heroesData" :key="hero.id" v-if="hero.id === match.hero_id"><img :alt="hero.heroName" :src="hero.file"><span hidden>{{ hero.heroName }}</span></div></td>
@@ -75,7 +74,7 @@
                         <td>{{ match.playerWon ? 'Won' : 'Lost' }}</td>
                         <td>{{ match.isRadiant ? 'Radiant' : 'Dire'}}</td>
                         <td>{{ match.kills }}/{{ match.deaths }}/{{ match.assists }}</td>
-                    </tr>
+                    </router-link>
                     </tbody>
                 </table>
 
@@ -151,7 +150,7 @@
             async getUserprofile() {
                 await axios.get('https://api.opendota.com/api/players/' + this.steamId32)
                     .then(response => {
-                        console.log(response.data);
+                        // console.log(response.data);
                         this.profilePicture = response.data.profile.avatarfull;
                         this.profileName = response.data.profile.personaname;
                         this.profileUrl = response.data.profile.profileurl;
@@ -163,15 +162,15 @@
                     });
                 await axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/peers')
                     .then(response => {
-                        console.log(response.data);
+                        // console.log(response.data);
                         this.profilePeers = response.data;
                     });
             },
             async getMatches() {
-                await axios.get('https://api.opendota.com/api/heroes')
-                    .then(response => {
-
-                    });
+                // await axios.get('https://api.opendota.com/api/heroes')
+                //     .then(response => {
+                //
+                //     });
                 console.log(heroesData);
                 await axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/matches')
                     .then(response => {
@@ -210,7 +209,7 @@
                             this.matches[i]["playerWon"] = result;
                         }
                         this.applyDataTablesFunction();
-                        console.log(this.matches);
+                        // console.log(this.matches);
                     });
 
 

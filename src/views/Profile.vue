@@ -1,5 +1,5 @@
 <template >
-    <div>
+    <div class="container">
         <div>{{ from }}</div>
         <NewUser v-if="newUser"/>
         <UserProfile v-else :userSteamId32="from"/>

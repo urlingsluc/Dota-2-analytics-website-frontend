@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <SearchProfiles :q="q"></SearchProfiles>
+    <div class="container">
+        <SearchProfiles :q="q"/>
     </div>
 </template>
 

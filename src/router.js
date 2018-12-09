@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import webAuth from './views/webAuth.vue'
 import Profile from './views/Profile.vue'
 import Search from './views/Search.vue'
+import Match from './views/Match.vue'
 import axios from 'axios'
 
 Vue.use(Router);
@@ -29,6 +30,14 @@ export default new Router({
             })
         },
         {
+            path: '/Match',
+            name: 'Match',
+            component: Match,
+            props: (route) => ({
+                id: route.query.id
+            })
+        },
+        {
             path: '/myprofile',
             name: 'Profile',
             component: Profile,
@@ -42,7 +51,7 @@ export default new Router({
             name: 'Profile',
             component: Profile,
             props: (route) => ({
-              from: route.query.from
+                from: route.query.from
             }),
             // beforeEnter: requireAuth
         },
