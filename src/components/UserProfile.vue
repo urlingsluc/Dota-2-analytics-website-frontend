@@ -141,8 +141,8 @@
             this.steamId64 = convertor.to64(this.steamId32);
             console.log(this.steamId32);
             console.log(this.steamId64);
-            this.getUserprofile();
-            this.getMatches();
+            await this.getUserprofile();
+            await this.getMatches();
 
 
         },

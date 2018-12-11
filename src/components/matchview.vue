@@ -100,7 +100,7 @@
         },
         methods: {
             async getMatch() {
-                axios.get('https://api.opendota.com/api/matches/' + this.match_id)
+                await axios.get('https://api.opendota.com/api/matches/' + this.match_id)
                     .then(response => {
                         console.log(response.data);
                         this.match = response.data;
