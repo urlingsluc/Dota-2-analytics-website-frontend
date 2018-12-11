@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-xs-12 col-md-5">
                         <h5>Players this player has played with</h5>
-                        <table style="display: block; overflow: auto; overflow-x: hidden;   height: 400px; " class="table table-hover">
+                        <table style="display: block; overflow: auto; overflow-x: auto;   height: 400px; " class="table table-hover">
                             <thead>
                             <tr>
                                 <th scope="col">Avatar</th>

@@ -1,18 +1,17 @@
 <template >
-    <!--v-for="match in matches" :key="match.lobby_id"-->
     <div>
         <div>
             <h2>
                 Welcome to dota 2 analytics
             </h2>
             <p>
-                On this website you will find several interesting stats about your dota 2 games and of your favorite pro-player
+                On this website you will find several interesting stats about your dota 2 games and of your favorite pro-players.
             </p>
         </div>
         <div>
-            <h4>Current matches with pro-players going on:</h4>
+            <h4><b>Live</b> high rank games:</h4>
             <div class="row flex-row flex-nowrap" style="overflow-x: auto;">
-                <div class="col-3" style="display: flex;" v-for="match in matches.slice(0, 14)" :key="match.lobby_id" v-if="checkIfNotablePlayersMoreThanZero(match)">
+                <div class="col-md-3" style="display: flex;" v-for="match in matches.slice(0, 14)" :key="match.lobby_id" v-if="checkIfNotablePlayersMoreThanZero(match)">
                     <div class="card" style="width: 15rem; padding: 12px; margin-bottom: 10px;">
                         <div>
                             <h5 style="float: inside "><span style="float: left; color: #66bb6a;">{{ match.radiant_score }}</span> Kills <span style="float: right; color: #ff4c4c;">{{ match.dire_score }}</span></h5>

@@ -6,7 +6,7 @@
         </div>
     <div class="row">
         <h3 class="offset-md-2" style="color: #66bb6a;">Radiant<span v-if="match.radiant_win" style="opacity: 0.7;"><sup>  Winner</sup></span></h3>
-        <div class="offset-md-1 col-md-10">
+        <div style="overflow-x: auto;" class="offset-md-1 col-md-10">
             <table id="matchTable" class="table table-hover table-bordered display">
                 <thead>
                 <tr>
@@ -41,7 +41,7 @@
             </table>
         </div>
         <h3 class="offset-md-2" style="color: #ff4c4c;">Dire <span v-if="!match.radiant_win" style="opacity: 0.7;"><sup>  Winner</sup></span></h3>
-        <div class="offset-md-1 col-md-10">
+        <div style="overflow-x: auto;" class="offset-md-1 col-md-10">
             <table id="matchTable" class="table table-hover table-bordered display">
                 <thead>
                 <tr>
