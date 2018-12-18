@@ -1,7 +1,6 @@
 <template>
     <div class="container">
-        <h4>It appears that you have not yet linked a steam account to your Dota-Analytics account. Please fill in your steam id down below (You can always change this). </h4>
-        <h6>You can find your steamid32 by filling in by using the filling in your steam profile url on this website: <a href="https://steamid.xyz/" target="_blank">steamid.xy</a></h6>
+        <h4>It appears that you have not yet linked a steam account to your Dota-Analytics account. Please fill in your steam username down below and select your account!</h4>
 
         <div class="row" style="padding-bottom: 30px;">
             <form class="offset-md-3 col-md-6" style="padding-top: 30px;" @submit.prevent="search">
@@ -12,7 +11,6 @@
                 <button class="btn btn-primary" >Search!</button>
             </form>
         </div>
-
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-2" style="margin-bottom: 25px;" v-for="profile in profiles" :key="profile.account_id">
                 <div class="img-thumbnail">

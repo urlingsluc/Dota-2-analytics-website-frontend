@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+        <span v-if="!loaded" class="fa fa-refresh fa-spin" style="font-size:24px;color: #2c3e50"></span>
+        <div v-else>
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link active show" data-toggle="tab" href="#Profile">Profile</a>
@@ -22,10 +24,10 @@
                     </div>
                     <div class="col-xs-12 col-md-4">
                         <h3 class="midText">{{ profileName }}</h3>
-                        <p class="midText">Solo MMR: {{ profileSoloMMR }}</p>
-                        <p class="midText">Party MMR: {{ profilePartyMMR }}</p>
-                        <p class="midText">Estimated MMR: {{ profileEstMMR }}</p>
-                        <p class="midText">Last match: {{ lastMatchRecorded }}</p>
+                        <p v-if="profileSoloMMR" class="midText">Solo MMR: {{ profileSoloMMR }}</p>
+                        <p v-if="profilePartyMMR" class="midText">Party MMR: {{ profilePartyMMR }}</p>
+                        <p v-if="profileEstMMR" class="midText">Estimated MMR: {{ profileEstMMR }}</p>
+                        <p v-if="lastMatchRecorded" class="midText">Last match: {{ lastMatchRecorded }}</p>
                     </div>
                     <div class="col-xs-12 col-md-5">
                         <h5>Players this player has played with</h5>
@@ -54,6 +56,7 @@
             <!--.Matches-->
             <div class="tab-pane fade" id="Matches">
                 <h4>Your recent matches</h4>
+                <p v-if="smallMatchSet">Currently your last 500 matches are shown, if you want all matches to be shown please click <span style="color: #18BC9C; cursor: pointer;" @click="getAllMatches">here</span> (please note that this may take a few seconds!)</p>
                 <table id="matchTable" class="table table-hover display">
                     <thead>
                     <tr>
@@ -84,7 +87,7 @@
                 <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
             </div>
         </div>
-
+        </div>
     </div>
 </template>
 
@@ -111,6 +114,9 @@
         },
         data() {
             return {
+                //Loading
+                loaded: false,
+
                 id:null,
                 name:'',
                 steamId32: null,
@@ -132,50 +138,24 @@
 
                 //matchData
                 matches: [],
+                smallMatchSet: true,
                 heroesData:heroesData
             }
         },
         async mounted() {
-            console.log('ayoooooooooo');
+            var timer = new Date();
             this.steamId32 = Number(this.userSteamId32);
+            console.log('sid32: ' + this.steamId32);
             this.steamId64 = convertor.to64(this.steamId32);
-            console.log(this.steamId32);
-            console.log(this.steamId64);
-            await this.getUserprofile();
-            await this.getMatches();
-
-
+            await this.requests_handler();
+            console.log('The time is: ' + (new Date() - timer) + 'ms')
         },
         methods: {
-            async getUserprofile() {
-                await axios.get('https://api.opendota.com/api/players/' + this.steamId32)
-                    .then(response => {
-                        // console.log(response.data);
-                        this.profilePicture = response.data.profile.avatarfull;
-                        this.profileName = response.data.profile.personaname;
-                        this.profileUrl = response.data.profile.profileurl;
-                        this.profileSoloMMR = response.data.solo_competitive_rank;
-                        this.profilePartyMMR = response.data.competitive_rank;
-                        this.profileEstMMR = response.data.mmr_estimate.estimate;
-                        // this.lastMatchRecorded = moment(response.data.tracked_until,"x").format("DD MMM YYYY hh:mm a")
-                        this.lastMatchRecorded = moment.unix("1544339710").subtract(1, 'months').format("DD MMM YYYY hh:mm a")
-                    });
-                await axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/peers')
-                    .then(response => {
-                        // console.log(response.data);
-                        this.profilePeers = response.data;
-                    });
-            },
-            async getMatches() {
-                // await axios.get('https://api.opendota.com/api/heroes')
-                //     .then(response => {
-                //
-                //     });
-                console.log(heroesData);
+            async getAllMatches() {
+                this.loaded = false;
                 await axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/matches')
                     .then(response => {
                         this.matches = response.data;
-
                         for(let i = 0; i < this.matches.length; i++) {
                             var result;
                             var parsedTime = parseSeconds({ hours: false })(this.matches[i].duration);
@@ -190,52 +170,85 @@
                             this.matches[i]["durationFormated"] = parsedTime.minutes + ':' + parsedTime.seconds;
                             if(this.matches[i].player_slot < 128) {
                                 this.matches[i]["isRadiant"] = true;
-                                if (this.matches[i].radiant_win) {
-                                    result = true;
-                                }
-                                else {
-                                    result = false;
-                                }
+                                result = this.matches[i].radiant_win;
                             }
                             else {
                                 this.matches[i]["isRadiant"] = false;
-                                if (this.matches[i].radiant_win) {
-                                    result = false;
-                                }
-                                else {
-                                    result = true;
-                                }
+                                result = !this.matches[i].radiant_win;
                             }
                             this.matches[i]["playerWon"] = result;
                         }
+                        // console.log('Class: methods, Function: , Line: 212');
+                        this.loaded = true;
+                        this.smallMatchSet = false;
                         this.applyDataTablesFunction();
                         // console.log(this.matches);
                     });
-
-
             },
-            // getPicture(heroId) {
-            //     var hero = {
-            //         file: "-"
-            //     };
-            //     heroesData.forEach(function(entry) {
-            //         if(heroId === entry.id) {
-            //             hero = entry;
-            //         }
-            //     });
-            //     return hero.file
-            // },
-
-
             applyDataTablesFunction() {
                 $(document).ready(function() {
                     $('#matchTable').DataTable({
                         "order": [[ 0, "desc" ]]
                     });
                 } );
-
                 // setTimeout(function() { $('#matchTable').DataTable(); }, 10000);
+            },
+            async requests_handler() {
+                await axios.all([
+                    this.request_1(), //or direct the axios request
+                    this.request_2(),
+                    this.request_3()
+                ])
+                    .then(axios.spread((player_response, player_peers_response, matches_response) => {
+                        // Profile
+                        this.profilePicture = player_response.data.profile.avatarfull;
+                        this.profileName = player_response.data.profile.personaname;
+                        this.profileUrl = player_response.data.profile.profileurl;
+                        this.profileSoloMMR = player_response.data.solo_competitive_rank;
+                        this.profilePartyMMR = player_response.data.competitive_rank;
+                        this.profileEstMMR = player_response.data.mmr_estimate.estimate;
+                        if (player_response.data.tracked_until) {
+                            this.lastMatchRecorded = moment.unix(player_response.data.tracked_until).subtract(1, 'months').format("DD MMM YYYY hh:mm a")
+                        }
 
+                        // Profile Peers
+                        this.profilePeers = player_peers_response.data;
+
+                        // Matches
+
+                        this.matches = matches_response.data;
+
+                        for(let i = 0; i < this.matches.length; i++) {
+                            var result;
+                            var parsedTime = parseSeconds({hours: false})(this.matches[i].duration);
+                            if (parsedTime.seconds.toString().length === 1) {
+                                parsedTime.seconds = '0' + parsedTime.seconds
+                            }
+                            if (parsedTime.minutes.toString().length === 1) {
+                                parsedTime.minutes = '0' + parsedTime.minutes
+                            }
+                            this.matches[i]["durationFormated"] = parsedTime.minutes + ':' + parsedTime.seconds;
+                            if (this.matches[i].player_slot < 128) {
+                                this.matches[i]["isRadiant"] = true;
+                                result = this.matches[i].radiant_win;
+                            } else {
+                                this.matches[i]["isRadiant"] = false;
+                                result = !this.matches[i].radiant_win;
+                            }
+                            this.matches[i]["playerWon"] = result;
+                        }
+                        this.applyDataTablesFunction();
+                        this.loaded = true;
+                    }))
+            },
+            request_1() {
+                return axios.get('https://api.opendota.com/api/players/' + this.steamId32);
+            },
+            request_2() {
+                return axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/peers');
+            },
+            request_3() {
+                return axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/matches?limit=500');
             }
         }
     }

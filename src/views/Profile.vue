@@ -1,6 +1,5 @@
 <template >
     <div class="container">
-        <div>{{ from }}</div>
         <NewUser v-if="newUser"/>
         <UserProfile v-else :userSteamId32="from"/>
     </div>
@@ -16,8 +15,7 @@
             UserProfile
         },
         props: {
-            from: String,
-            // search:Boolean
+            from: String
         },
         data() {
             return {

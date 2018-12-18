@@ -10,7 +10,8 @@
         </div>
         <div>
             <h4><b>Live</b> high rank games:</h4>
-            <div class="row flex-row flex-nowrap" style="overflow-x: auto;">
+            <span v-if="!loadedRow" class="fa fa-refresh fa-spin" style="font-size:24px;color: #2c3e50"></span>
+            <div v-else class="row flex-row flex-nowrap" style="overflow-x: auto;">
                 <div class="col-md-3" style="display: flex;" v-for="match in matches.slice(0, 14)" :key="match.lobby_id" v-if="checkIfNotablePlayersMoreThanZero(match)">
                     <div class="card" style="width: 15rem; padding: 12px; margin-bottom: 10px;">
                         <div>
@@ -44,6 +45,7 @@
         data() {
             return {
                 matches: [],
+                loadedRow: false,
                 heroesData:heroesData,
             }
         },
@@ -52,13 +54,14 @@
         },
         methods: {
             async getLiveProMatches() {
-                axios.get('https://api.opendota.com/api/live')
+                await axios.get('https://api.opendota.com/api/live')
                     .then(response => {
                         response.data.sort(function(a,b) {
                             return b.average_mmr - a.average_mmr
                         });
                         this.matches = response.data;
-                    })
+                    });
+                this.loadedRow = true;
             },
             checkIfNotablePlayersMoreThanZero(match) {
                 var amountPlayers = 0;
