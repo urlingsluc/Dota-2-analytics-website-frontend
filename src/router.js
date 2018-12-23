@@ -5,6 +5,7 @@ import webAuth from './views/webAuth.vue'
 import Profile from './views/Profile.vue'
 import Search from './views/Search.vue'
 import Match from './views/Match.vue'
+import Favorites from './views/Favorites.vue'
 import axios from 'axios'
 
 Vue.use(Router);
@@ -19,7 +20,13 @@ export default new Router({
         {
             path: '/webAuth',
             name: 'webAuth',
-            component: webAuth
+            component: webAuth,
+        },
+        {
+            path: '/favorites',
+            name: 'favorites',
+            component: Favorites,
+            beforeEnter: requireAuth
         },
         {
             path: '/Search',

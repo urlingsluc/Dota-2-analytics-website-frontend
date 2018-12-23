@@ -16,7 +16,7 @@
                     <li v-else class="nav-item">
                         <div class="btn-group" role="group">
                             <router-link class="nav-link btn btn-secondary" active-class="active"  :to="{ path: 'myprofile', query: { from:  getSteamId32 }}" >Your profile</router-link>
-                            <router-link class="nav-link btn btn-secondary" active-class="active" to="#">Favorites</router-link>
+                            <router-link class="nav-link btn btn-secondary" active-class="active" to="/favorites">Favorites</router-link>
                             <button class="nav-link btn btn-secondary" v-on:click="logOff">Log off</button>
                         </div>
                     </li>
@@ -50,11 +50,11 @@
         created() {
             EventBus.$on('logged', () => {
                 this.isLogged = this.checkIfIsLogged()
-            })
+            });
 
             EventBus.$on('changeSteamId32', function(newSteamId32) {
                 this.mySteamId32 = newSteamId32;
-            })
+            });
         },
         methods: {
             checkIfIsLogged () {
