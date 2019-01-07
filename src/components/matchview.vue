@@ -1,8 +1,9 @@
 <template>
     <div>
         <div>
-            <h3><span v-if="match.radiant_win" style="color: #66bb6a;">Radiant win</span><span v-else style="color: #ff4c4c;">Dire win</span></h3>
+            <h3><span v-if="match.radiant_win" style="color: #66bb6a;">Radiant win</span><span v-else style="color: #ff4c4c;">Dire win</span><span v-if="loggedIn" style="float: right;" class="btn" v-bind:class="[favorite ? 'btn-danger' : 'btn-success']" @click="updateFavorite"><i v-bind:class="[favorite ? 'fa fa-star' : 'fa fa-star-o']"></i></span></h3>
             <h3><span style="color: #66bb6a; margin-right: 75px;">{{ match.radiant_score }}</span><span style="color: #ff4c4c; margin-left: 75px;">{{ match.dire_score }}</span></h3>
+
         </div>
     <div class="row">
         <h3 class="offset-md-2" style="color: #66bb6a;">Radiant<span v-if="match.radiant_win" style="opacity: 0.7;"><sup>  Winner</sup></span></h3>
@@ -82,6 +83,7 @@
 <script>
     import axios from 'axios';
     import { heroesData } from '../variables.js'
+    import { connection } from "../variables";
     export default {
         name: "matchview",
         props: {
@@ -91,12 +93,18 @@
             return {
                 match_id:null,
                 heroesData:heroesData,
-                match: []
+                match: [],
+                loggedIn:false,
+                favorite: false
             }
         },
         async mounted() {
-            this.match_id = this.id;
+            this.match_id = parseInt(this.id);
             this.getMatch();
+
+            this.checkIfPlayerLoggedIn();
+            if(this.loggedIn) this.checkIfFavoriteGame();
+
         },
         methods: {
             async getMatch() {
@@ -105,6 +113,33 @@
                         console.log(response.data);
                         this.match = response.data;
                     })
+            },
+            async updateFavorite() {
+                const data = JSON.parse(localStorage.getItem('user'));
+                await axios.post(connection + 'favgames/updategame', {
+                    id: data.id,
+                    gameId: this.match_id
+                }).then(response => {
+                    console.log(this.match_id)
+                })
+                this.checkIfFavoriteGame()
+            },
+            checkIfPlayerLoggedIn() {
+                var data = localStorage.getItem('user');
+                if(data) {
+                    this.loggedIn = true;
+                }
+            },
+            async checkIfFavoriteGame() {
+                const data = JSON.parse(localStorage.getItem('user'));
+                await axios.post(connection + 'favgames/isfavorite',{
+                    id: data.id,
+                    gameId: this.match_id
+                }).then(response => {
+                    this.favorite = response.data
+                }).catch(err => {
+                    console.log(err)
+                })
             }
         }
     }

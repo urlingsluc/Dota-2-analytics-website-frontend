@@ -23,7 +23,7 @@
                             <a v-bind:href=profileUrl target="_blank" class="btn btn-block btn-primary" style="margin-top: 35px;  width: 100%">Steam Profile</a>
                         </div>
                         <div class="col-xs-12 col-md-4">
-                            <h3 class="midText">{{ profileName }} <span v-if="loggedIn && myProfile" class="btn btn-success" style="float: right;" @click="unlinkProfile">unlink</span><span v-else-if="loggedIn" style="float: right;" class="btn btn-success" @click="updateFavorite"><i v-bind:class="[favorite ? 'fa fa-star' : 'fa fa-star-o']"></i></span></h3>
+                            <h3 class="midText">{{ profileName }} <span v-if="loggedIn && myProfile" class="btn btn-success" style="float: right;" @click="unlinkProfile">unlink</span><span v-else-if="loggedIn" style="float: right;" class="btn" v-bind:class="[favorite ? 'btn-danger' : 'btn-success']" @click="updateFavorite"><i v-bind:class="[favorite ? 'fa fa-star' : 'fa fa-star-o']"></i></span></h3>
                             <p v-if="profileSoloMMR" class="midText">Solo MMR: {{ profileSoloMMR }}</p>
                             <p v-if="profilePartyMMR" class="midText">Party MMR: {{ profilePartyMMR }}</p>
                             <p v-if="profileEstMMR" class="midText">Estimated MMR: {{ profileEstMMR }}</p>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-xs-12 col-md-5">
                             <h5>Players this player has played with</h5>
-                            <table style="display: block; overflow: auto; overflow-x: auto;   height: 400px; " class="table table-hover">
+                            <table style="display: block; overflow: auto; overflow-x: auto; height: 400px; " class="table table-hover">
                                 <thead>
                                 <tr>
                                     <th scope="col">Avatar</th>
@@ -41,13 +41,13 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="peer in profilePeers" v-bind:key="peer.account_id">
-                                    <th scope="row"><img style="border-radius:2%;"  v-bind:src="peer.avatar"/></th>
-                                    <td><router-link v-tooltip.bottom.start=peer.personaname :to="{ path: 'Profile', query: { from:  peer.account_id.toString() }}" >{{ peer.personaname | truncate(10 , '...') }}</router-link></td>
+                                <router-link style="cursor: pointer" v-for="peer in profilePeers" v-bind:key="peer.account_id" tag="tr" :to="{ path: 'Profile', query: { from:  peer.account_id.toString() }}">
+                                    <th scope="row"><img style="border-radius:8%;"  v-bind:src="peer.avatar"/></th>
+                                    <td><div v-tooltip.bottom.start=peer.personaname  >{{ peer.personaname | truncate(10 , '...') }}</div></td>
                                     <!--TODO CONTINUE HERE-->
                                     <td>{{ peer.with_games }}</td>
                                     <td>{{ (peer.with_win / peer.with_games * 100).toFixed(2) }}%</td>
-                                </tr>
+                                </router-link>
                                 </tbody>
                             </table>
                         </div>
@@ -56,13 +56,13 @@
                 <!--.Matches-->
                 <div class="tab-pane fade" id="Matches">
                     <h4>Your recent matches</h4>
-                    <p v-if="smallMatchSet">Currently your last 500 matches are shown, if you want all matches to be shown please click <span style="color: #18BC9C; cursor: pointer;" @click="getAllMatches">here</span> (please note that this may take a few seconds!)</p>
+                    <p v-if="smallMatchSet">Currently your last 250 matches are shown, if you want all matches to be shown please click <span style="color: #18BC9C; cursor: pointer;" @click="getAllMatches">here</span> (please note that this may take a few seconds!)</p>
                     <table id="matchTable" class="table table-hover display">
                         <thead>
                         <tr>
                             <th scope="col">Match id</th>
                             <th scope="col">Hero</th>
-                            <th scope="col">duration</th>
+                            <th scope="col">Duration</th>
                             <th scope="col">Outcome</th>
                             <th scope="col">Radiant or Dire</th>
                             <th scope="col">K/D/A</th>
@@ -185,11 +185,9 @@
                             }
                             this.matches[i]["playerWon"] = result;
                         }
-                        // console.log('Class: methods, Function: , Line: 212');
                         this.loaded = true;
                         this.smallMatchSet = false;
                         this.applyDataTablesFunction();
-                        // console.log(this.matches);
                     });
             },
             applyDataTablesFunction() {
@@ -247,6 +245,9 @@
                         this.applyDataTablesFunction();
                         this.loaded = true;
                     }))
+                    .catch(err => {
+                        console.log(err)
+                    })
             },
             request_1() {
                 return axios.get('https://api.opendota.com/api/players/' + this.steamId32);
@@ -255,7 +256,7 @@
                 return axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/peers');
             },
             request_3() {
-                return axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/matches?limit=500');
+                return axios.get('https://api.opendota.com/api/players/' + this.steamId32 + '/matches?limit=250');
             },
             checkIfMyProfile() {
                 const data = JSON.parse(localStorage.getItem('user'));
@@ -285,7 +286,7 @@
                 })
             },
             checkIfPlayerLoggedIn() {
-                var data =localStorage.getItem('user');
+                var data = localStorage.getItem('user');
                 if(data) {
                     this.loggedIn = true;
                 }
@@ -303,7 +304,7 @@
             },
             async updateFavorite() {
                 const data = JSON.parse(localStorage.getItem('user'));
-                await axios.post(connection + 'favplayers/updatePlayer', {
+                await axios.post(connection + 'favplayers/updateplayer', {
                     id: data.id,
                     playerId: this.steamId32
                 }).then(response => {
