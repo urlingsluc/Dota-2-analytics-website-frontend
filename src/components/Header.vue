@@ -84,7 +84,7 @@
                     const testStringified = JSON.parse(test);
                     this.mySteamId32 = testStringified.steamId32;
                 }
-                console.log('Class: computed, Function: getSteamId32, Line: 87');
+                // console.log('Class: computed, Function: getSteamId32, Line: 87');
 
                 return this.mySteamId32.toString();
             }

@@ -42,8 +42,8 @@
                     password: this.password
                 }).then(response => {
 
-                    console.log('data:');
-                    console.log(response.data);
+                    // console.log('data:');
+                    // console.log(response.data);
 
                     response.data["steamId64"] = convertor.to64(response.data.steamId32);
 
@@ -55,7 +55,7 @@
                     this.$router.push('/')
 
                 }).catch(error => {
-                    console.log(error);
+                    // console.log(error);
                     this.error = true;
                 });
             }

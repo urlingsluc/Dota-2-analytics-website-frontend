@@ -149,13 +149,13 @@
         async mounted() {
             var timer = new Date();
             this.steamId32 = Number(this.userSteamId32);
-            console.log('sid32: ' + this.steamId32);
+            // console.log('sid32: ' + this.steamId32);
             this.steamId64 = convertor.to64(this.steamId32);
             await this.requests_handler();
             this.checkIfPlayerLoggedIn();
             if(this.loggedIn)this.checkIfMyProfile();
             if(this.loggedIn && !this.myProfile) this.checkIfFavoritePlayer();
-            console.log('The time is: ' + (new Date() - timer) + 'ms')
+            // console.log('The time is: ' + (new Date() - timer) + 'ms')
         },
         methods: {
             async getAllMatches() {

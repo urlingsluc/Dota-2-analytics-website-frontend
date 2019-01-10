@@ -23,8 +23,6 @@
                 </div>
             </div>
 
-
-
             <div class="offset-md-1 col-md-5 offset-md-1">
                 <h3>Favorite games:</h3>
                 <div>
@@ -127,6 +125,7 @@
                                         this.favGamesFromApi[i]["durationFormated"] = parsedTime.minutes + ':' + parsedTime.seconds;
                                     }
                                 }).catch(innerErr => {
+                                    //TODO AFVANGEN
                                     console.log(innerErr)
                             })
                         }

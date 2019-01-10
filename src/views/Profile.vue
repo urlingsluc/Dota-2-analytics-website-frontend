@@ -23,7 +23,7 @@
             }
         },
         methods: {
-            // async load()
+/*            // async load()
             // {
             //     var user = JSON.parse(localStorage.getItem('user'));
             //     console.log('Class: default, Function: mounted, Line: 22');
@@ -34,7 +34,7 @@
             //     // this.email = user.email;
             //     this.steamId32 = user.steamId32;
             //     this.steamId64 = user.steamId64;
-            // },
+            // },*/
             async whatProfile() {
                 if(this.from === "0") {
                     //dont do anything because its a new user. And a new user is automatically shown.
@@ -43,7 +43,7 @@
                     var str = this.from;
                     //check if it contains strings
                     if (str.match(/\D+/)) {
-                        console.log("CONTAINS LETTERS");
+                        // console.log("CONTAINS LETTERS");
                         this.$router.push("/");
                         return;
                     }
@@ -52,7 +52,7 @@
                     this.newUser = false;
                     // this.steamId32 = this.from;
                     // this.steamId64 = convertor.to64(this.from);
-                    console.log("EXISTS");
+                    // console.log("EXISTS");
                 }
                 else {
 
