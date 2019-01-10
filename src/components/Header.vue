@@ -21,10 +21,10 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" to="/about">Pricing</router-link>
+                        <!--<router-link class="nav-link" active-class="active" to="/about">Pricing</router-link>-->
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <!--<a class="nav-link" href="#">About</a>-->
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" @submit.prevent="sendSearch">

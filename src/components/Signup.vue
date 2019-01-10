@@ -61,6 +61,11 @@
         },
         methods: {
             sendSignup: async function() {
+
+                this.typeError = false;
+                this.serverError = false;
+                this.accountCreateSuccess = false;
+
                 //Everything gets checked here except the password.
                 if(this.name.length <= 4  || this.username.length <= 4 || this.email.length <= 4) {
                     this.typeError = true;

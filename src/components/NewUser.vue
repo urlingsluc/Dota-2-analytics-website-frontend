@@ -18,7 +18,7 @@
                     <div class="caption">
                         <h5>{{ profile.personaname }}</h5>
                         <!--<p><router-link class="btn btn-primary" :to="{ path: 'Profile', query: { from:  profile.account_id.toString() }}" > Go to Profile</router-link> </p>-->
-                        <button class="btn btn-primary"  v-on:click="Link(profile.account_id)">Link!</button> <router-link class="btn btn-secondary" :to="{ path: 'Profile', query: { from:  profile.account_id.toString() }}">Show profile</router-link><img id="steamImg"  src="/img/icons/steam-logo.png" style=" margin-left: 15px;border-radius:2%; width: 20%;" alt="avatar">
+                        <button style="margin: 5px;" class="btn btn-primary"  v-on:click="Link(profile.account_id)">Link!</button> <router-link style="margin: 5px;" class="btn btn-secondary" :to="{ path: 'Profile', query: { from:  profile.account_id.toString() }}">Show profile</router-link><img id="steamImg"  src="/img/icons/steam-logo.png" style="     margin-left: 15px;border-radius:2%; width: 20%;" alt="avatar">
                     </div>
                 </div>
             </div>

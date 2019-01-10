@@ -52,7 +52,7 @@
                     // console.log(readCookie('user'));
                     EventBus.$emit('logged', 'User logged');
                     // location.reload(true);
-                    this.$router.push('about')
+                    this.$router.push('/')
 
                 }).catch(error => {
                     console.log(error);

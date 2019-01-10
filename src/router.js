@@ -97,7 +97,7 @@ function requireAuth(to, from, next) {
         })
             .then(response => {
                 console.log(response);
-                next()
+                next();
             })
             .catch(error => {
                 console.log(error);
