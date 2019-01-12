@@ -18,7 +18,7 @@
             }
         },
         mounted() {
-            if(localStorage.getItem('user')) {
+            if (localStorage.getItem('user')) {
                 this.loggedIn = true;
                 // location.reload();
             }

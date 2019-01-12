@@ -13,7 +13,7 @@
                 <label style="text-align: left; display: block; padding-left: 20px;" for="inputPassword">Password:</label>
                 <input v-model="password" type="password" class="form-control" id="inputPassword" placeholder="Name">
             </div>
-            <button class="btn btn-primary" >Login</button>
+            <button class="btn btn-primary">Login</button>
         </form>
     </div>
 </template>
@@ -27,7 +27,7 @@
 
     export default {
         name: "LoginOrSignup",
-        data() {
+        data () {
             return {
                 username: '',
                 password: '',

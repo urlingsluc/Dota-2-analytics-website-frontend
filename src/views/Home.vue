@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import homescreen from '@/components/homescreen.vue'
+  import homescreen from '@/components/HomeScreen.vue'
 
     export default {
         name: 'home',

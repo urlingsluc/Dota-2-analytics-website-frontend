@@ -110,7 +110,7 @@
                         for (var i = 0; i < this.favGames.length; i++) {
                             axios.get('https://api.opendota.com/api/matches/' + this.favGames[i].favId)
                                 .then(innerResponse => {
-                                    this.favGamesFromApi.push(innerResponse.data)
+                                    this.favGamesFromApi.push(innerResponse.data);
 
                                     for(let i = 0; i < this.favGamesFromApi.length; i++) {
                                         var parsedTime = parseSeconds({ hours: false })(this.favGamesFromApi[i].duration);

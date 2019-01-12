@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import favoriteScreen from '@/components/favoriteScreen.vue'
+    import favoriteScreen from '@/components/FavoriteScreen.vue'
     export default {
         name: "Favorites",
         components: {

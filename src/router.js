@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import webAuth from './views/webAuth.vue'
+import webAuth from './views/WebAuth.vue'
 import Profile from './views/Profile.vue'
 import Search from './views/Search.vue'
 import Match from './views/Match.vue'
@@ -73,36 +73,28 @@ export default new Router({
     ]
 })
 
-import { EventBus } from "./event-bus";
+// import { EventBus } from "./event-bus";
 import { connection } from "./variables";
 //Refresh load bar
-function logOff () {
-    EventBus.$emit('logged', 'User logged');
-}
+// function logOff () {
+//     EventBus.$emit('logged', 'User logged');
+// }
 
 function requireAuth(to, from, next) {
-    var data;
-    console.log('REQUIRE AUTHENTICATION');
-    data = JSON.parse(localStorage.getItem('user'));
-    console.log('bbbbb');
+    var data = JSON.parse(localStorage.getItem('user'));
     var dataStringified = JSON.stringify(data);
-    console.log(dataStringified);
     //i dont know why it wont work in other ways.
     if (dataStringified != 'null') {
-        console.log('not null!!');
 
         axios.post(connection + 'auth/token', {
             id: data.id,
             token: data.token
         })
             .then(response => {
-                console.log(response);
                 next();
             })
             .catch(error => {
-                console.log(error);
                 localStorage.removeItem('user');
-                // this.logOff();
                 next({
                     path: '/webAuth',
                     query: {redirect: to.fullPath}
@@ -111,7 +103,6 @@ function requireAuth(to, from, next) {
     }
     else {
         localStorage.removeItem('user');
-        // this.logOff();
         next({
             path: '/webAuth',
             query: {redirect: to.fullPath}

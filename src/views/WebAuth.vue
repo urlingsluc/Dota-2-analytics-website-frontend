@@ -21,8 +21,8 @@
 </template>
 
 <script>
-    import Login from '@/components/Login.vue'
-    import Signup from '@/components/Signup.vue'
+    import Login from '@/components/LogIn.vue'
+    import Signup from '@/components/SignUp.vue'
     export default {
         name: "webAuth",
         components: {
@@ -31,7 +31,7 @@
         },
         data() {
             return {
-                doLogin:true,
+                doLogin: true,
             }
         },
     }

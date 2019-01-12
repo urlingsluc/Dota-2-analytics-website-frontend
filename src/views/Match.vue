@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import matchview from '@/components/matchview.vue'
+    import matchview from '@/components/MatchView.vue'
     export default {
         name: "Match",
         components: {
