@@ -8,10 +8,10 @@
 <script>
   import homescreen from '@/components/HomeScreen.vue'
 
-    export default {
-        name: 'home',
-        components: {
-            homescreen
-        }
+  export default {
+    name: 'home',
+    components: {
+      homescreen
     }
+  }
 </script>

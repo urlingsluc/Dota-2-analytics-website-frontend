@@ -1,7 +1,7 @@
 <template>
-   <div class="container">
-       <matchview :id="id"/>
-   </div>
+    <div class="container">
+        <matchview :id="id"/>
+    </div>
 </template>
 
 <script>
@@ -13,6 +13,11 @@
         },
         props: {
             id: String,
+        },
+        beforeMount() {
+            if(this.id === undefined) {
+                this.$router.push("/notfound")
+            }
         }
     }
 </script>

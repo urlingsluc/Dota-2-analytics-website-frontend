@@ -14,17 +14,16 @@
         },
         data() {
             return {
-                loggedIn: false,
+                // loggedIn: false,
             }
         },
         mounted() {
-            if (localStorage.getItem('user')) {
-                this.loggedIn = true;
-                // location.reload();
-            }
-            else {
-                this.loggedIn = false;
-            }
+            // if (localStorage.getItem('user')) {
+            //     this.loggedIn = true;
+            // }
+            // else {
+            //     this.loggedIn = false;
+            // }
         }
     }
 </script>

@@ -94,12 +94,12 @@
                                         this.favPlayersFromApi.push(innerResponse.data)
                                     }
                                 }).catch(innerErr => {
-                                    console.log(innerErr)
-                                })
+                                console.log(innerErr)
+                            })
 
                         }
                     }).catch(err => {
-                        console.log(err)
+                    console.log(err)
                 })
             },
             async getFavoriteGames() {
@@ -125,8 +125,8 @@
                                         this.favGamesFromApi[i]["durationFormated"] = parsedTime.minutes + ':' + parsedTime.seconds;
                                     }
                                 }).catch(innerErr => {
-                                    //TODO AFVANGEN
-                                    console.log(innerErr)
+                                //TODO AFVANGEN
+                                console.log(innerErr)
                             })
                         }
                     })

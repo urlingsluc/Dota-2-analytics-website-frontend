@@ -71,7 +71,7 @@
                     this.typeError = true;
                     return;
                 }
-                
+
                 await axios.post(connection + 'auth/insert',{
                     name: this.name,
                     email: this.email,

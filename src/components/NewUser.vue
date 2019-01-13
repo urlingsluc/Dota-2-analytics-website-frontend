@@ -121,7 +121,7 @@
         transition: opacity 0.5s;
     }
     #steamImg:hover {
-        
+
         opacity: 1.0;
     }
 </style>

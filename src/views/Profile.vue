@@ -23,18 +23,18 @@
             }
         },
         methods: {
-/*            // async load()
-            // {
-            //     var user = JSON.parse(localStorage.getItem('user'));
-            //     console.log('Class: default, Function: mounted, Line: 22');
-            //     console.log(user);
-            //
-            //     this.id = user.id;
-            //     this.name = user.name;
-            //     // this.email = user.email;
-            //     this.steamId32 = user.steamId32;
-            //     this.steamId64 = user.steamId64;
-            // },*/
+            /*            // async load()
+                        // {
+                        //     var user = JSON.parse(localStorage.getItem('user'));
+                        //     console.log('Class: default, Function: mounted, Line: 22');
+                        //     console.log(user);
+                        //
+                        //     this.id = user.id;
+                        //     this.name = user.name;
+                        //     // this.email = user.email;
+                        //     this.steamId32 = user.steamId32;
+                        //     this.steamId64 = user.steamId64;
+                        // },*/
             async whatProfile() {
                 if(this.from === "0") {
                     //dont do anything because its a new user. And a new user is automatically shown.
@@ -62,6 +62,11 @@
         async mounted() {
             // this.load();
             this.whatProfile();
+        },
+        beforeMount() {
+            if(this.from === undefined) {
+                this.$router.push("/notfound")
+            }
         }
     }
 </script>

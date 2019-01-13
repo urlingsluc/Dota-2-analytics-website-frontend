@@ -11,7 +11,7 @@
             </div>
             <div class="form-group" style="position: relative">
                 <label style="text-align: left; display: block; padding-left: 20px;" for="inputPassword">Password:</label>
-                <input v-model="password" type="password" class="form-control" id="inputPassword" placeholder="Name">
+                <input v-model="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
             </div>
             <button class="btn btn-primary">Login</button>
         </form>

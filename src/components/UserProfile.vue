@@ -9,9 +9,9 @@
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#Matches">Matches</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#Overall_stats">Overall stats</a>
-                </li>
+                <!--<li class="nav-item">-->
+                    <!--<a class="nav-link" data-toggle="tab" href="#Overall_stats">Overall stats</a>-->
+                <!--</li>-->
             </ul>
 
             <div id="myTabContent" class="tab-content" style="margin-top: 25px;">
@@ -82,10 +82,10 @@
                     </table>
 
                 </div>
-                <!--.Overall Stats-->
-                <div class="tab-pane fade" id="Overall_stats">
-                    <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
-                </div>
+                <!--&lt;!&ndash;.Overall Stats&ndash;&gt;-->
+                <!--<div class="tab-pane fade" id="Overall_stats">-->
+                    <!--<p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
@@ -103,6 +103,10 @@
     import dt from 'datatables.net';
     import dtbs4 from 'datatables.net-bs4';
     const $ = JQuery;
+
+
+
+
 
     import convertor from 'steam-id-convertor';
     export default {
@@ -309,7 +313,7 @@
                     playerId: this.steamId32
                 }).then(response => {
 
-                })
+                });
                 this.checkIfFavoritePlayer();
                 // if(this.favorite) {
                 //     this.favorite = false
@@ -320,7 +324,6 @@
             }
         }
     }
-
 
 </script>
 <style scoped>
